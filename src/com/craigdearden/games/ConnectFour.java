@@ -16,27 +16,29 @@ import javafx.stage.Stage;
  *
  * @author C1
  */
-public class ConnectFour extends Application
-{
+public class ConnectFour extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception
-    {
-        Parent root = FXMLLoader.load(
-                getClass().getResource("fxml_connectfour.fxml"));
+  @Override
+  public void start(Stage stage) throws Exception {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml_connectfour.fxml"));
 
-        Scene scene = new Scene(root);
+    Parent root = (Parent) loader.load();
 
-        stage.setScene(scene);
-        stage.show();
-    }
+    Scene scene = new Scene(root);
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args)
-    {
-        launch(args);
-    }
+    ConnectFourController controller = (ConnectFourController) loader.getController();
+    
+    controller.setStage(stage);
+
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
 
 }

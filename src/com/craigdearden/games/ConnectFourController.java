@@ -23,6 +23,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -42,7 +44,8 @@ public class ConnectFourController implements Initializable
     private Image _blank;
     private Image _redCircle;
     private Image _blackCircle;
-
+    private Stage stage;
+    
     @FXML
     private AnchorPane ap;
     @FXML
@@ -137,6 +140,10 @@ public class ConnectFourController implements Initializable
     private ImageView image55;
     @FXML
     private ImageView image65;
+    
+    
+    
+    
 
     @FXML
     public void column_CLICK(MouseEvent click)
@@ -210,8 +217,6 @@ public class ConnectFourController implements Initializable
     {
         alert("About", "Product Version: Connect Four 1.0 \n");
     }
-    
-    
 
     private ImageView getImageView(int row, int column, GridPane gridPane)
     {
@@ -234,6 +239,8 @@ public class ConnectFourController implements Initializable
     private void alert(String title, String message)
     {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(stage);
         alert.setGraphic(null);
         alert.setHeaderText(null);
         alert.setTitle(title);
@@ -244,6 +251,8 @@ public class ConnectFourController implements Initializable
     private Optional<ButtonType> prompt(String title, String message)
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(stage);
         alert.setGraphic(null);
         alert.setHeaderText(null);
         alert.setTitle(title);
@@ -383,6 +392,10 @@ public class ConnectFourController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         initializeGame();
+    }
+    
+    public void setStage(Stage stage) {
+      this.stage = stage;
     }
     
     
