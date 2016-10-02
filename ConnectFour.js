@@ -40,7 +40,7 @@ Game.prototype.turnOver = function() {
 Game.prototype.checkForWinner = function() {
   for(var rowOrigin = 0; rowOrigin <= 2; rowOrigin++) {
     for(var columnOrigin = 0; columnOrigin <= 3; columnOrigin++) {
-       this.check4x4(rowOrigin, columnOrigin);
+      this.check4x4(rowOrigin, columnOrigin);
     }
   }
 
@@ -51,145 +51,154 @@ Game.prototype.checkForWinner = function() {
 };
 
 Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
-    var numRed;
-    var numBlack;
-    var column;
-    var row;
+  var numRed;
+  var numBlack;
+  var column;
+  var row;
 
-    //Check rows
-     for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-      numRed = 0;
-      numBlack = 0;
-      for (column = columnOrigin; column <= columnOrigin + 3; column++) {
-        if (this.gameboard[row][column] == "black") {
-          numBlack++;
-        } else if (this.gameboard[row][column] == "red") {
-          numRed++;
-        }
-      }
-      if (numRed == 4) {
-        winner = "red";
-      } else if (numBlack == 4) {
-        winner = "black";
-      }
-    }
-
-    //Check columns
-    for (column = columnOrigin; column <= columnOrigin + 3; column++) {
-      numRed = 0;
-      numBlack = 0;
-      for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-        if (this.gameboard[row][column] == "black") {
-          numBlack++;
-        } else if (this.gameboard[row][column] == "red") {
-          numRed++;
-        }
-      }
-      if (numRed == 4) {
-        winner = "red";
-      } else if (numBlack == 4) {
-        winner = "black";
-      }
-    }
-
-    //Check diagnol
+  //Check rows
+  for (row = rowOrigin; row <= rowOrigin + 3; row++) {
     numRed = 0;
     numBlack = 0;
-    column = columnOrigin;
+    for (column = columnOrigin; column <= columnOrigin + 3; column++) {
+      if (this.gameboard[row][column] == "black") {
+        numBlack++;
+      } else if (this.gameboard[row][column] == "red") {
+        numRed++;
+      }
+    }
+    if (numRed == 4) {
+      winner = "red";
+    } else if (numBlack == 4) {
+      winner = "black";
+    }
+  }
+
+  //Check columns
+  for (column = columnOrigin; column <= columnOrigin + 3; column++) {
+    numRed = 0;
+    numBlack = 0;
     for (row = rowOrigin; row <= rowOrigin + 3; row++) {
       if (this.gameboard[row][column] == "black") {
         numBlack++;
       } else if (this.gameboard[row][column] == "red") {
         numRed++;
       }
-      column++;
     }
     if (numRed == 4) {
       winner = "red";
     } else if (numBlack == 4) {
       winner = "black";
     }
+  }
 
-
-    //Check anti-diagnoal
-    numRed = 0;
-    numBlack = 0;
-    column = columnOrigin;
-    for (row = rowOrigin + 3; row >= rowOrigin; row--) {
-      if (this.gameboard[row][column] == "black") {
-        numBlack++;
-      } else if (this.gameboard[row][column] == "red") {
-        numRed++;
-      }
-      column++;
+  //Check diagnol
+  numRed = 0;
+  numBlack = 0;
+  column = columnOrigin;
+  for (row = rowOrigin; row <= rowOrigin + 3; row++) {
+    if (this.gameboard[row][column] == "black") {
+      numBlack++;
+    } else if (this.gameboard[row][column] == "red") {
+      numRed++;
     }
-    if (numRed == 4) {
-      winner = "red";
-    } else if (numBlack == 4) {
-      winner = "black";
+    column++;
+  }
+  if (numRed == 4) {
+    winner = "red";
+  } else if (numBlack == 4) {
+    winner = "black";
+  }
+
+
+  //Check anti-diagnoal
+  numRed = 0;
+  numBlack = 0;
+  column = columnOrigin;
+  for (row = rowOrigin + 3; row >= rowOrigin; row--) {
+    if (this.gameboard[row][column] == "black") {
+      numBlack++;
+    } else if (this.gameboard[row][column] == "red") {
+      numRed++;
     }
-  };
+    column++;
+  }
+  if (numRed == 4) {
+    winner = "red";
+  } else if (numBlack == 4) {
+    winner = "black";
+  }
+};
 
 
-  Game.prototype.checkForTie = function() {
-    var tie = true;
+Game.prototype.checkForTie = function() {
+  var tie = true;
 
-    for(var m = 0; m < this.gameboard.length; m++) {
-      for(var n = 0; n < this.gameboard[0].length; n++) {
-        if(this.gameboard[m][n] == "none") {
-          tie = false;
-          break;
-        }
-      }
-    }
-
-    if(tie) {
-      showBanner("Tie!");
-    }
-  };
-
-  function image_onClick(game,origin) {
-    if(winner != "none") {
-      return;
-    }
-
-    var image = document.getElementById(origin.id);
-    var colNum = getColumnNum(image);
-
-    // for each row element within the column that was clicked,
-    // starting from the bottom, find the first image that is transparent
-    // and assign the appropriate player piece to that element
-    for(var o = game.gameboard.length - 1; o >= 0; o--) {
-      if(game.gameboard[o][colNum] == "none") {
-        game.gameboard[o][colNum] = (turn == "red") ? "red" : "black";
-        setImage(document.getElementById(origin.id.replace(origin.id[1],o)));
-        game.checkForWinner();
-        game.checkForTie();
-        game.turnOver();
+  for(var m = 0; m < this.gameboard.length; m++) {
+    for(var n = 0; n < this.gameboard[0].length; n++) {
+      if(this.gameboard[m][n] == "none") {
+        tie = false;
         break;
       }
     }
   }
 
-  function getColumnNum(element) {
-    var lastIndex = element.id.length - 1;
-    return Number(element.id.split("")[lastIndex]);
+  if(tie) {
+    showBanner("Tie!");
+  }
+};
+
+function image_onClick(game,origin) {
+  if(winner != "none") {
+    return;
   }
 
-  function setImage(image) {
-      image.src = (turn == "red") ? "images/red.png" : "images/black.gif";
+  var image = document.getElementById(origin.id);
+  var colNum = getColumnNum(image);
+
+  // for each row element within the column that was clicked,
+  // starting from the bottom, find the first image that is transparent
+  // and assign the appropriate player piece to that element
+  for(var o = game.gameboard.length - 1; o >= 0; o--) {
+    if(game.gameboard[o][colNum] == "none") {
+      game.gameboard[o][colNum] = (turn == "red") ? "red" : "black";
+      setImage(document.getElementById(origin.id.replace(origin.id[1],o)));
+      game.checkForWinner();
+      game.checkForTie();
+      game.turnOver();
+      break;
+    }
+  }
+}
+
+function getColumnNum(element) {
+  var lastIndex = element.id.length - 1;
+  return Number(element.id.split("")[lastIndex]);
+}
+
+function setImage(image) {
+  image.src = (turn == "red") ? "images/red.png" : "images/black.gif";
+}
+
+function hideBanner() {
+  $('.banner').hide();
+}
+
+function showBanner(message) {
+  var banner = $(".banner p");
+
+  banner.text(message);
+
+  if(message.match(/.red./) {
+    banner.css("color", "red");
+  } else if(message.match(/.black./)) {
+    banner.css("color", "black");
+  } else if(message.match(/.tie./) {
+    banner.css("color","white");
   }
 
-  function hideBanner() {
-    document.getElementById('light').style.display='none';
-    document.getElementById('fade').style.display='none';
-  }
-
-  function showBanner(text) {
-    document.getElementById("banner").innerHTML = text;
-    document.getElementById('light').style.display='block';
-    document.getElementById('fade').style.display='block';
-  }
+  $('.banner').show();
+}
 
 
   // Create an action listener for each image element on the gameboard
@@ -209,30 +218,30 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
 
   };
 
-  // CSS Altering Functions
-  // This is from https://developer.mozilla.org/en-US/docs/Web/Events/resize
+// CSS Altering Functions
+// This is from https://developer.mozilla.org/en-US/docs/Web/Events/resize
 /*  (function() {
 
-  window.addEventListener("resize", resizeThrottler, false);
+    window.addEventListener("resize", resizeThrottler, false);
 
-  var resizeTimeout;
-  function resizeThrottler() {
-    // ignore resize events as long as an actualResizeHandler execution is in the queue
-    if ( !resizeTimeout ) {
-      resizeTimeout = setTimeout(function() {
-        resizeTimeout = null;
-        actualResizeHandler();
+    var resizeTimeout;
+    function resizeThrottler() {
+// ignore resize events as long as an actualResizeHandler execution is in the queue
+if ( !resizeTimeout ) {
+resizeTimeout = setTimeout(function() {
+resizeTimeout = null;
+actualResizeHandler();
 
-       // The actualResizeHandler will execute at a rate of 15fps
-       }, 66);
-    }
-  }
+// The actualResizeHandler will execute at a rate of 15fps
+}, 66);
+}
+}
 
-  function actualResizeHandler() {
-    var div = getElementById("square");
-    var width = div.width();
-    div.css('height', width);
-  }
+function actualResizeHandler() {
+var div = getElementById("square");
+var width = div.width();
+div.css('height', width);
+}
 
 }());
 */
