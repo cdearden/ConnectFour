@@ -189,11 +189,11 @@ function showBanner(message) {
 
   banner.text(message);
 
-  if(message.match(/.red./) {
+  if(message.match(/red*/i)) {
     banner.css("color", "red");
-  } else if(message.match(/.black./)) {
+  } else if(message.match(/black*/i)) {
     banner.css("color", "black");
-  } else if(message.match(/.tie./) {
+  } else if(message.match(/tie*/i)) {
     banner.css("color","white");
   }
 
@@ -211,10 +211,9 @@ function showBanner(message) {
       images[p].addEventListener("click", action);
     }
 
-    document.getElementById("light").addEventListener("click", function() {hideBanner();});
-    document.getElementById("fade").addEventListener("click", function() {hideBanner();});
+    $('.banner').on("click", function() {hideBanner();});
 
-    document.getElementById("newGame").addEventListener("click", function() {connectfour.initialize();});
+    $(".newGame").on("click", function() {connectfour.initialize();});
 
   };
 
