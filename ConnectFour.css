@@ -17,7 +17,7 @@ header {
 }
 
 
-#gameboard {
+.gameboard {
   position: relative;
   margin: 0 auto !important;
   float: none !important;

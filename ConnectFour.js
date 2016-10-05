@@ -14,27 +14,27 @@ function Game() {
   }
 
   this.initialize = function() {
-    var images = document.getElementById("gameboard").getElementsByTagName("img");
+    var images = $('.gameboard img');
 
-    for(var j = 0; j < images.length; j++) {
-      images[j].src = "images/transparent.png";
-    }
+    $.each(images, function(index, image) {
+      $(image).attr('src','images/transparent.png');
+    });
 
     // Initialize the background array
     for(var k = 0; k < this.gameboard.length; k++) {
       for(var l = 0; l < this.gameboard[0].length; l++) {
-        this.gameboard[k][l] = "none";
+        this.gameboard[k][l] = 'none';
       }
     }
 
-    turn = "red";
-    winner = "none";
+    turn = 'red';
+    winner = 'none';
   };
 }
 
 
 Game.prototype.turnOver = function() {
-  turn = (turn == "red") ? "black" : "red";
+  turn = (turn == 'red') ? 'black' : 'red';
 };
 
 Game.prototype.checkForWinner = function() {
@@ -44,8 +44,8 @@ Game.prototype.checkForWinner = function() {
     }
   }
 
-  if(winner != "none") {
-    var message = (winner == "red") ? "Red Wins!" : "Black Wins!";
+  if(winner != 'none') {
+    var message = (winner == 'red') ? 'Red Wins!' : 'Black Wins!';
     showBanner(message);
   }
 };
@@ -61,16 +61,16 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
     numRed = 0;
     numBlack = 0;
     for (column = columnOrigin; column <= columnOrigin + 3; column++) {
-      if (this.gameboard[row][column] == "black") {
+      if (this.gameboard[row][column] == 'black') {
         numBlack++;
-      } else if (this.gameboard[row][column] == "red") {
+      } else if (this.gameboard[row][column] == 'red') {
         numRed++;
       }
     }
     if (numRed == 4) {
-      winner = "red";
+      winner = 'red';
     } else if (numBlack == 4) {
-      winner = "black";
+      winner = 'black';
     }
   }
 
@@ -79,16 +79,16 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
     numRed = 0;
     numBlack = 0;
     for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-      if (this.gameboard[row][column] == "black") {
+      if (this.gameboard[row][column] == 'black') {
         numBlack++;
-      } else if (this.gameboard[row][column] == "red") {
+      } else if (this.gameboard[row][column] == 'red') {
         numRed++;
       }
     }
     if (numRed == 4) {
-      winner = "red";
+      winner = 'red';
     } else if (numBlack == 4) {
-      winner = "black";
+      winner = 'black';
     }
   }
 
@@ -97,17 +97,17 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
   numBlack = 0;
   column = columnOrigin;
   for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-    if (this.gameboard[row][column] == "black") {
+    if (this.gameboard[row][column] == 'black') {
       numBlack++;
-    } else if (this.gameboard[row][column] == "red") {
+    } else if (this.gameboard[row][column] == 'red') {
       numRed++;
     }
     column++;
   }
   if (numRed == 4) {
-    winner = "red";
+    winner = 'red';
   } else if (numBlack == 4) {
-    winner = "black";
+    winner = 'black';
   }
 
 
@@ -116,17 +116,17 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
   numBlack = 0;
   column = columnOrigin;
   for (row = rowOrigin + 3; row >= rowOrigin; row--) {
-    if (this.gameboard[row][column] == "black") {
+    if (this.gameboard[row][column] == 'black') {
       numBlack++;
-    } else if (this.gameboard[row][column] == "red") {
+    } else if (this.gameboard[row][column] == 'red') {
       numRed++;
     }
     column++;
   }
   if (numRed == 4) {
-    winner = "red";
+    winner = 'red';
   } else if (numBlack == 4) {
-    winner = "black";
+    winner = 'black';
   }
 };
 
@@ -136,7 +136,7 @@ Game.prototype.checkForTie = function() {
 
   for(var m = 0; m < this.gameboard.length; m++) {
     for(var n = 0; n < this.gameboard[0].length; n++) {
-      if(this.gameboard[m][n] == "none") {
+      if(this.gameboard[m][n] == 'none') {
         tie = false;
         break;
       }
@@ -144,12 +144,12 @@ Game.prototype.checkForTie = function() {
   }
 
   if(tie) {
-    showBanner("Tie!");
+    showBanner('Tie!');
   }
 };
 
 function image_onClick(game,origin) {
-  if(winner != "none") {
+  if(winner != 'none') {
     return;
   }
 
@@ -160,8 +160,8 @@ function image_onClick(game,origin) {
   // starting from the bottom, find the first image that is transparent
   // and assign the appropriate player piece to that element
   for(var o = game.gameboard.length - 1; o >= 0; o--) {
-    if(game.gameboard[o][colNum] == "none") {
-      game.gameboard[o][colNum] = (turn == "red") ? "red" : "black";
+    if(game.gameboard[o][colNum] == 'none') {
+      game.gameboard[o][colNum] = (turn == 'red') ? 'red' : 'black';
       setImage(document.getElementById(origin.id.replace(origin.id[1],o)));
       game.checkForWinner();
       game.checkForTie();
@@ -173,11 +173,11 @@ function image_onClick(game,origin) {
 
 function getColumnNum(element) {
   var lastIndex = element.id.length - 1;
-  return Number(element.id.split("")[lastIndex]);
+  return Number(element.id.split('')[lastIndex]);
 }
 
 function setImage(image) {
-  image.src = (turn == "red") ? "images/red.png" : "images/black.gif";
+  image.src = (turn == 'red') ? 'images/red.png' : 'images/black.gif';
 }
 
 function hideBanner() {
@@ -185,16 +185,16 @@ function hideBanner() {
 }
 
 function showBanner(message) {
-  var banner = $(".banner p");
+  var banner = $('.banner p');
 
   banner.text(message);
 
   if(message.match(/red*/i)) {
-    banner.css("color", "red");
+    banner.css('color', 'red');
   } else if(message.match(/black*/i)) {
-    banner.css("color", "black");
+    banner.css('color', 'black');
   } else if(message.match(/tie*/i)) {
-    banner.css("color","white");
+    banner.css('color','white');
   }
 
   $('.banner').show();
@@ -204,16 +204,15 @@ function showBanner(message) {
   // Create an action listener for each image element on the gameboard
   function createActionListeners() {
 
-    var images = document.getElementById("gameboard").getElementsByTagName("img");
+    var images = $('.gameboard img');
     var action = function() {image_onClick(connectfour, this);};
 
-    for(var p = 0; p < images.length; p++) {
-      images[p].addEventListener("click", action);
-    }
+    $.each(images, function(index, image) {
+      $(image).on('click',action);
+    });
 
-    $('.banner').on("click", function() {hideBanner();});
-
-    $(".newGame").on("click", function() {connectfour.initialize();});
+    $('.banner').on('click', function() {hideBanner();});
+    $('.newGame').on('click', function() {connectfour.initialize();});
 
   };
 
@@ -221,7 +220,7 @@ function showBanner(message) {
 // This is from https://developer.mozilla.org/en-US/docs/Web/Events/resize
 /*  (function() {
 
-    window.addEventListener("resize", resizeThrottler, false);
+    window.addEventListener('resize', resizeThrottler, false);
 
     var resizeTimeout;
     function resizeThrottler() {
@@ -237,7 +236,7 @@ actualResizeHandler();
 }
 
 function actualResizeHandler() {
-var div = getElementById("square");
+var div = getElementById('square');
 var width = div.width();
 div.css('height', width);
 }
