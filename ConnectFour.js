@@ -162,7 +162,7 @@ function image_onClick(game,origin) {
   for(var o = game.gameboard.length - 1; o >= 0; o--) {
     if(game.gameboard[o][colNum] == 'none') {
       game.gameboard[o][colNum] = (turn == 'red') ? 'red' : 'black';
-      setImage(document.getElementById(origin.id.replace(origin.id[1],o)));
+      setImage($('#' + origin.id.replace(origin.id[1],o)));
       game.checkForWinner();
       game.checkForTie();
       game.turnOver();
@@ -177,7 +177,8 @@ function getColumnNum(element) {
 }
 
 function setImage(image) {
-  image.src = (turn == 'red') ? 'images/red.png' : 'images/black.gif';
+  var file = (turn == 'red') ? 'images/red.png' : 'images/black.gif';
+  image.attr('src',file);
 }
 
 function hideBanner() {
