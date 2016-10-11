@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  margin 0 auto;
+  margin: 0 auto;
 }
 
 header {
@@ -19,8 +19,8 @@ header {
 
 .gameboard {
   position: relative;
-  margin: 0 auto !important;
-  float: none !important;
+  margin: 0 auto;
+  float: none;
   width: 100vmin;
 }
 
@@ -33,14 +33,14 @@ header {
 
 .newGame {
   position: absolute;
-  right: 0%;
-  bottom: 0%;
+  right: 0;
+  bottom: 0;
   font-size: 14pt;
   color: #fff;
   text-decoration: none;
 }
 
-#square {
+.square {
   border: 0.5vw solid black;
   border-collapse: collapse;
   float: left;
@@ -59,6 +59,10 @@ header {
   z-index: 1;
   width: 100vw;
   height: 100vh;
+  
+  /* Fallback colors for IE 6,7, & 8*/
+  background-color: rgb(0,0,0);
+
   background-color: rgba(0,0,0,0.5);
 }
 
