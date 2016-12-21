@@ -1,5 +1,7 @@
 // ConnectFour.js
 // ==============
+
+
 var winner;
 var turn;
 var connectfour = new Game();
@@ -34,7 +36,7 @@ function Game() {
 
 
 Game.prototype.turnOver = function() {
-  turn = (turn == 'red') ? 'black' : 'red';
+  turn = (turn === 'red') ? 'black' : 'red';
 };
 
 Game.prototype.checkForWinner = function() {
@@ -44,8 +46,8 @@ Game.prototype.checkForWinner = function() {
     }
   }
 
-  if(winner != 'none') {
-    var message = (winner == 'red') ? 'Red Wins!' : 'Black Wins!';
+  if(winner !== 'none') {
+    var message = (winner === 'red') ? 'Red Wins!' : 'Black Wins!';
     showBanner(message);
   }
 };
@@ -61,15 +63,15 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
     numRed = 0;
     numBlack = 0;
     for (column = columnOrigin; column <= columnOrigin + 3; column++) {
-      if (this.gameboard[row][column] == 'black') {
+      if (this.gameboard[row][column] === 'black') {
         numBlack++;
-      } else if (this.gameboard[row][column] == 'red') {
+      } else if (this.gameboard[row][column] === 'red') {
         numRed++;
       }
     }
-    if (numRed == 4) {
+    if (numRed === 4) {
       winner = 'red';
-    } else if (numBlack == 4) {
+    } else if (numBlack === 4) {
       winner = 'black';
     }
   }
@@ -79,15 +81,15 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
     numRed = 0;
     numBlack = 0;
     for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-      if (this.gameboard[row][column] == 'black') {
+      if (this.gameboard[row][column] === 'black') {
         numBlack++;
-      } else if (this.gameboard[row][column] == 'red') {
+      } else if (this.gameboard[row][column] === 'red') {
         numRed++;
       }
     }
-    if (numRed == 4) {
+    if (numRed === 4) {
       winner = 'red';
-    } else if (numBlack == 4) {
+    } else if (numBlack === 4) {
       winner = 'black';
     }
   }
@@ -97,35 +99,34 @@ Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
   numBlack = 0;
   column = columnOrigin;
   for (row = rowOrigin; row <= rowOrigin + 3; row++) {
-    if (this.gameboard[row][column] == 'black') {
+    if (this.gameboard[row][column] === 'black') {
       numBlack++;
-    } else if (this.gameboard[row][column] == 'red') {
+    } else if (this.gameboard[row][column] === 'red') {
       numRed++;
     }
     column++;
   }
-  if (numRed == 4) {
+  if (numRed === 4) {
     winner = 'red';
-  } else if (numBlack == 4) {
+  } else if (numBlack === 4) {
     winner = 'black';
   }
-
 
   //Check anti-diagnoal
   numRed = 0;
   numBlack = 0;
   column = columnOrigin;
   for (row = rowOrigin + 3; row >= rowOrigin; row--) {
-    if (this.gameboard[row][column] == 'black') {
+    if (this.gameboard[row][column] === 'black') {
       numBlack++;
-    } else if (this.gameboard[row][column] == 'red') {
+    } else if (this.gameboard[row][column] === 'red') {
       numRed++;
     }
     column++;
   }
-  if (numRed == 4) {
+  if (numRed === 4) {
     winner = 'red';
-  } else if (numBlack == 4) {
+  } else if (numBlack === 4) {
     winner = 'black';
   }
 };
@@ -136,7 +137,7 @@ Game.prototype.checkForTie = function() {
 
   for(var m = 0; m < this.gameboard.length; m++) {
     for(var n = 0; n < this.gameboard[0].length; n++) {
-      if(this.gameboard[m][n] == 'none') {
+      if(this.gameboard[m][n] === 'none') {
         tie = false;
         break;
       }
@@ -149,7 +150,7 @@ Game.prototype.checkForTie = function() {
 };
 
 function image_onClick(game,origin) {
-  if(winner != 'none') {
+  if(winner !== 'none') {
     return;
   }
 
@@ -160,8 +161,8 @@ function image_onClick(game,origin) {
   // starting from the bottom, find the first image that is transparent
   // and assign the appropriate player piece to that element
   for(var o = game.gameboard.length - 1; o >= 0; o--) {
-    if(game.gameboard[o][colNum] == 'none') {
-      game.gameboard[o][colNum] = (turn == 'red') ? 'red' : 'black';
+    if(game.gameboard[o][colNum] === 'none') {
+      game.gameboard[o][colNum] = (turn === 'red') ? 'red' : 'black';
       setImage($('#' + origin.id.replace(origin.id[1],o)));
       game.checkForWinner();
       game.checkForTie();
@@ -177,7 +178,7 @@ function getColumnNum(element) {
 }
 
 function setImage(image) {
-  var file = (turn == 'red') ? '../images/red.png' : '../images/black.gif';
+  var file = (turn === 'red') ? '../images/red.png' : '../images/black.gif';
   image.attr('src',file);
 }
 
@@ -201,46 +202,17 @@ function showBanner(message) {
   $('.banner').show();
 }
 
+// Create an action listener for each image element on the gameboard
+function createActionListeners() {
 
-  // Create an action listener for each image element on the gameboard
-  function createActionListeners() {
+  var images = $('.gameboard img');
+  var action = function() {image_onClick(connectfour, this);};
 
-    var images = $('.gameboard img');
-    var action = function() {image_onClick(connectfour, this);};
+  $.each(images, function(index, image) {
+    $(image).on('click',action);
+  });
 
-    $.each(images, function(index, image) {
-      $(image).on('click',action);
-    });
+  $('.banner').on('click', function() {hideBanner();});
+  $('.newGame').on('click', function() {connectfour.initialize();});
 
-    $('.banner').on('click', function() {hideBanner();});
-    $('.newGame').on('click', function() {connectfour.initialize();});
-
-  };
-
-// CSS Altering Functions
-// This is from https://developer.mozilla.org/en-US/docs/Web/Events/resize
-/*  (function() {
-
-    window.addEventListener('resize', resizeThrottler, false);
-
-    var resizeTimeout;
-    function resizeThrottler() {
-// ignore resize events as long as an actualResizeHandler execution is in the queue
-if ( !resizeTimeout ) {
-resizeTimeout = setTimeout(function() {
-resizeTimeout = null;
-actualResizeHandler();
-
-// The actualResizeHandler will execute at a rate of 15fps
-}, 66);
-}
-}
-
-function actualResizeHandler() {
-var div = getElementById('square');
-var width = div.width();
-div.css('height', width);
-}
-
-}());
-*/
+};
