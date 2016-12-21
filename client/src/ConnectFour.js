@@ -17,7 +17,7 @@ function Game() {
     var images = $('.gameboard img');
 
     $.each(images, function(index, image) {
-      $(image).attr('src','images/transparent.png');
+      $(image).attr('src','../images/transparent.png');
     });
 
     // Initialize the background array
@@ -177,7 +177,7 @@ function getColumnNum(element) {
 }
 
 function setImage(image) {
-  var file = (turn == 'red') ? 'images/red.png' : 'images/black.gif';
+  var file = (turn == 'red') ? '../images/red.png' : '../images/black.gif';
   image.attr('src',file);
 }
 
