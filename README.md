@@ -8,8 +8,8 @@ Deployed example: [Connect Four on Heroku]()
 
 ##Installation
 ```
-git clone https://github.com/cdearden/ConnectFour.git
-npm start
+$ git clone https://github.com/cdearden/ConnectFour.git
+$ npm start
 ```
 
 ##Usage
