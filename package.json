@@ -1,0 +1,28 @@
+{
+  "name": "connectfour",
+  "version": "1.0.0",
+  "description": "Connect Four, the game.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js && live-server ./client/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdearden/ConnectFour.git"
+  },
+  "keywords": [
+    "Connect",
+    "Four",
+    "game"
+  ],
+  "author": "Craig Dearden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cdearden/ConnectFour/issues"
+  },
+  "homepage": "https://github.com/cdearden/ConnectFour#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
