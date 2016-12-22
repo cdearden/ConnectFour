@@ -11,20 +11,21 @@
   </head>
 
   <body ng-app="connectFour" ng-controller="connectFourController">
-    <div class="banner"><p></p></div>
+    <div ng-click="hideBanner()" class="banner"><p></p></div>
 
     <header>
       <div class="title">Connect Four</div>
-      <div><a href="#" class="newGame">New Game</a></div>
+      <div><a href="#" ng-click="connectfour.initialize()" class="newGame">New Game</a></div>
     </header>
 
     <div class="container">
-        <table>
+        <table class="gameboard">
           <tr ng-repeat="(rowKey, row) in gameboard track by $index" >
-            <td  ng-repeat="(colKey, col) in row track by $index"
-             ><img class="gamepiece" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick(board, $event)" alt="Game Piece"></td>
+            <td class="gamepiece" ng-repeat="(colKey, col) in row track by $index"
+             ><img class="image" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick(board, $event)"
+             src="../client/images/transparent.png" alt="Game Piece"></td>
           </tr>
-      </div>
+      </table>
     </div>
 
   </body>

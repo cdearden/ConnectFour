@@ -8,11 +8,7 @@ const app = angular.module('connectFour',[]);
 app.controller('connectFourController', ['$scope', function($scope) {
   var winner;
   var turn;
-  var connectfour = new Game();
-
-
-  connectfour.initialize();
-  createActionListeners();
+  $scope.connectfour = new Game();
 
   function Game() {
     this.gameboard = new Array(6);
@@ -22,12 +18,12 @@ app.controller('connectFourController', ['$scope', function($scope) {
 
     $scope.gameboard = this.gameboard;
 
+
     this.initialize = function() {
       var images = $('.gameboard img');
 
       $.each(images, function(index, image) {
         $(image).attr('src','../client/images/transparent.png');
-        console.log('hi');
       });
 
       // Initialize the background array
@@ -40,8 +36,8 @@ app.controller('connectFourController', ['$scope', function($scope) {
       turn = 'red';
       winner = 'none';
     };
+    this.initialize();
   }
-
 
   $scope.turnOver = function() {
     turn = (turn === 'red') ? 'black' : 'red';
@@ -162,7 +158,6 @@ app.controller('connectFourController', ['$scope', function($scope) {
       return;
     }
     let origin = e.currentTarget;
-    console.log(origin.id);
 
     var image = document.getElementById(origin.id);
     var colNum = getColumnNum(image);
@@ -192,7 +187,7 @@ app.controller('connectFourController', ['$scope', function($scope) {
     image.attr('src',file);
   }
 
-  function hideBanner() {
+  $scope.hideBanner = function() {
     $('.banner').hide();
   }
 
@@ -211,20 +206,5 @@ app.controller('connectFourController', ['$scope', function($scope) {
 
     $('.banner').show();
   }
-
-  // Create an action listener for each image element on the gameboard
-  function createActionListeners() {
-
-    // var images = $('.gameboard img');
-    // var action = function() {image_onClick(connectfour, this);};
-    //
-    // $.each(images, function(index, image) {
-    //   $(image).on('click',action);
-    // });
-
-    $('.banner').on('click', function() {hideBanner();});
-    $('.newGame').on('click', function() {connectfour.initialize();});
-
-  };
 
 }]);
