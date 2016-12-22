@@ -1,10 +1,15 @@
 
 const app = angular.module('connectFour',[]);
 
+// app.service('gameService', [function(){
+//
+// }]);
+
 app.controller('connectFourController', ['$scope', function($scope) {
   var winner;
   var turn;
   var connectfour = new Game();
+
 
   connectfour.initialize();
   createActionListeners();
@@ -15,14 +20,14 @@ app.controller('connectFourController', ['$scope', function($scope) {
       this.gameboard[i] = new Array(7);
     }
 
-    $scope.board = this.gameboard;
-    console.log($scope.board);
+    $scope.gameboard = this.gameboard;
 
     this.initialize = function() {
       var images = $('.gameboard img');
 
       $.each(images, function(index, image) {
-        $(image).attr('src','../images/transparent.png');
+        $(image).attr('src','../client/images/transparent.png');
+        console.log('hi');
       });
 
       // Initialize the background array
@@ -38,11 +43,11 @@ app.controller('connectFourController', ['$scope', function($scope) {
   }
 
 
-  Game.prototype.turnOver = function() {
+  $scope.turnOver = function() {
     turn = (turn === 'red') ? 'black' : 'red';
   };
 
-  Game.prototype.checkForWinner = function() {
+  $scope.checkForWinner = function() {
     for(var rowOrigin = 0; rowOrigin <= 2; rowOrigin++) {
       for(var columnOrigin = 0; columnOrigin <= 3; columnOrigin++) {
         this.check4x4(rowOrigin, columnOrigin);
@@ -55,7 +60,7 @@ app.controller('connectFourController', ['$scope', function($scope) {
     }
   };
 
-  Game.prototype.check4x4 = function(rowOrigin,columnOrigin) {
+  $scope.check4x4 = function(rowOrigin,columnOrigin) {
     var numRed;
     var numBlack;
     var column;
@@ -135,7 +140,7 @@ app.controller('connectFourController', ['$scope', function($scope) {
   };
 
 
-  Game.prototype.checkForTie = function() {
+  $scope.checkForTie = function() {
     var tie = true;
 
     for(var m = 0; m < this.gameboard.length; m++) {
@@ -152,10 +157,12 @@ app.controller('connectFourController', ['$scope', function($scope) {
     }
   };
 
-  function image_onClick(game,origin) {
+  $scope.image_onClick = function (game, e) {
     if(winner !== 'none') {
       return;
     }
+    let origin = e.currentTarget;
+    console.log(origin.id);
 
     var image = document.getElementById(origin.id);
     var colNum = getColumnNum(image);
@@ -163,13 +170,13 @@ app.controller('connectFourController', ['$scope', function($scope) {
     // for each row element within the column that was clicked,
     // starting from the bottom, find the first image that is transparent
     // and assign the appropriate player piece to that element
-    for(var o = game.gameboard.length - 1; o >= 0; o--) {
-      if(game.gameboard[o][colNum] === 'none') {
-        game.gameboard[o][colNum] = (turn === 'red') ? 'red' : 'black';
+    for(var o = $scope.gameboard.length - 1; o >= 0; o--) {
+      if($scope.gameboard[o][colNum] === 'none') {
+        $scope.gameboard[o][colNum] = (turn === 'red') ? 'red' : 'black';
         setImage($('#' + origin.id.replace(origin.id[1],o)));
-        game.checkForWinner();
-        game.checkForTie();
-        game.turnOver();
+        $scope.checkForWinner();
+        $scope.checkForTie();
+        $scope.turnOver();
         break;
       }
     }
@@ -181,7 +188,7 @@ app.controller('connectFourController', ['$scope', function($scope) {
   }
 
   function setImage(image) {
-    var file = (turn === 'red') ? '../images/red.png' : '../images/black.gif';
+    var file = (turn === 'red') ? '../client/images/red.png' : '../client/images/black.gif';
     image.attr('src',file);
   }
 
@@ -208,12 +215,12 @@ app.controller('connectFourController', ['$scope', function($scope) {
   // Create an action listener for each image element on the gameboard
   function createActionListeners() {
 
-    var images = $('.gameboard img');
-    var action = function() {image_onClick(connectfour, this);};
-
-    $.each(images, function(index, image) {
-      $(image).on('click',action);
-    });
+    // var images = $('.gameboard img');
+    // var action = function() {image_onClick(connectfour, this);};
+    //
+    // $.each(images, function(index, image) {
+    //   $(image).on('click',action);
+    // });
 
     $('.banner').on('click', function() {hideBanner();});
     $('.newGame').on('click', function() {connectfour.initialize();});

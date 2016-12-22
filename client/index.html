@@ -19,12 +19,11 @@
     </header>
 
     <div class="container">
-      <div class="gameboard">
         <table>
-          <tr ng-repeat="(rowKey, row) in board track by $index" >
-            <td class="square" ng-repeat="(colKey, col) in row track by $index"><img id="{{'r' + rowKey + 'c' + colKey}}" src="../client/images/transparent.png" class="gamepiece" alt="Game Piece"></td>
+          <tr ng-repeat="(rowKey, row) in gameboard track by $index" >
+            <td  ng-repeat="(colKey, col) in row track by $index"
+             ><img class="gamepiece" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick(board, $event)" alt="Game Piece"></td>
           </tr>
-        </table>
       </div>
     </div>
 
