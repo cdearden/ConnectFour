@@ -8,7 +8,8 @@ const paths = {
 console.log(paths.public);
 app.use(express.static(paths.public));
 
-const port = 8080;
+
+let port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log("Server listening on port", port);
 })
