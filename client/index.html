@@ -5,67 +5,30 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./ConnectFour.css"></link>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="./src/app.js"></script>
+    <script src="./src/gameFactory.js"></script>
+    <script src="./src/gameController.js"></script>
   </head>
 
-  <body>
-    <div class="banner"><p></p></div>
+  <body ng-app="connectFour" ng-controller="connectFourController">
+    <div ng-click="hideBanner()" class="banner"><p></p></div>
 
     <header>
       <div class="title">Connect Four</div>
-      <div><a href="#" class="newGame">New Game</a></div>
+      <div><a href="#" ng-click="initializeView()" class="newGame">New Game</a></div>
     </header>
+
     <div class="container">
-      <div class="gameboard">
-          <div class="square"><img id="r0c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r0c6" class="gamepiece" alt="Game Piece"></div>
-
-          <div class="square"><img id="r1c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r1c6" class="gamepiece" alt="Game Piece"></div>
-
-          <div class="square"><img id="r2c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r2c6" class="gamepiece" alt="Game Piece"></div>
-
-          <div class="square"><img id="r3c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r3c6" class="gamepiece" alt="Game Piece"></div>
-
-          <div class="square"><img id="r4c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r4c6" class="gamepiece" alt="Game Piece"></div>
-
-          <div class="square"><img id="r5c0" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c1" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c2" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c3" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c4" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c5" class="gamepiece" alt="Game Piece"></div>
-          <div class="square"><img id="r5c6" class="gamepiece" alt="Game Piece"></div>
-      </div>
+        <table class="gameboard">
+          <tr ng-repeat="(rowKey, row) in gameboard track by $index" >
+            <td class="gamepiece" ng-repeat="(colKey, col) in row track by $index"
+             ><img class="image" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick($event)"
+             src="./images/transparent.png" alt="Game Piece"></td>
+          </tr>
+      </table>
     </div>
+
   </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="./src/ConnectFour.js"></script>
