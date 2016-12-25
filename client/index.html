@@ -8,6 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="./src/app.js"></script>
+    <script src="./src/gameFactory.js"></script>
+    <script src="./src/gameController.js"></script>
   </head>
 
   <body ng-app="connectFour" ng-controller="connectFourController">
@@ -15,15 +17,15 @@
 
     <header>
       <div class="title">Connect Four</div>
-      <div><a href="#" ng-click="connectfour.initialize()" class="newGame">New Game</a></div>
+      <div><a href="#" ng-click="initializeView()" class="newGame">New Game</a></div>
     </header>
 
     <div class="container">
         <table class="gameboard">
           <tr ng-repeat="(rowKey, row) in gameboard track by $index" >
             <td class="gamepiece" ng-repeat="(colKey, col) in row track by $index"
-             ><img class="image" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick(board, $event)"
-             src="../client/images/transparent.png" alt="Game Piece"></td>
+             ><img class="image" id="{{'r' + rowKey + 'c' + colKey}}" ng-click="image_onClick($event)"
+             src="./images/transparent.png" alt="Game Piece"></td>
           </tr>
       </table>
     </div>

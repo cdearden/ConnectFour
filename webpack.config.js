@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './client/src/ConnectFour.js',
+  entry: './client/src/app.js',
   output: {
     filename: './client/dist/bundle.js'
   },
