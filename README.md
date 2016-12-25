@@ -4,7 +4,7 @@
 ##Basic Overview
 This is the classic Connect Four game.
 
-Deployed example: [Connect Four on Heroku]()
+Deployed example: [Connect Four on Heroku](https://connect--four.herokuapp.com)
 
 ##Installation
 ```
